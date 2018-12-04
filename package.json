@@ -1,0 +1,30 @@
+{
+  "name": "how-to-work-unit-tests-in",
+  "version": "0.0.1",
+  "description": "unit test example for js",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon --experimental-modules  home-work-nodejs-fs/index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergeyGuns/how-to-work-unit-tests-in-js.git"
+  },
+  "keywords": [
+    "javascript",
+    "unit",
+    "test",
+    "example"
+  ],
+  "author": "Sergey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SergeyGuns/how-to-work-unit-tests-in-js/issues"
+  },
+  "homepage": "https://github.com/SergeyGuns/how-to-work-unit-tests-in-js#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  },
+  "dependencies": {}
+}
