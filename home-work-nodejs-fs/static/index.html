@@ -8,18 +8,44 @@
 </head>
 
 <body>
-  <form class="form" method="POST" action="file">
-    <input type="text" class='input'>
-    <input type="submit" class='btn' value="Сохранить">
+  <form class="form">
+    <div>
+      <input type="text" class='input_create' placeholder="Имя файла">
+      <input type="button" class='btn_create' value="Создать файл">
+    </div>
+    <div style="margin-top:20px">
+      <input type="text" class='input_save_file' placeholder="Имя файла" style="display:block;margin-top:10px">
+      <input type="text" class='input_save_data' placeholder="Что записать" style="display:block;margin-top:10px">
+      <input type="button" class='btn_check' value="Записать в файл" style="display:block;margin-top:10px">
+    </div>
+    <div style="margin-top:20px">
+      <input type="text" class='input_json'>
+      <input type="button" class='btn_json' value="Сохранить в json">
+    </div>
+    <div style="margin-top:20px">
+      <input type="text" class='input_show' placeholder="Имя файла">
+      <input type="button" class='btn_show' value="Вывести содержимое файла">
+    </div>
+    <div style="margin-top:20px">
+      <input type="text" class='input_delete' placeholder="Имя файла">
+      <input type="button" class='btn_del' value="Удалить файл">
+    </div>
+
   </form>
 
   <div class="node_to_append"></div>
+  <div class="show_file_content"></div>
   <script>
     const form = document.querySelector('.form');
-    const input = document.querySelector('.input');
-    const btn = document.querySelector('.btn');
+    const input = document.querySelector('.input_json');
+    const btnCreate = document.querySelector('.btn_create');
+    const btnCheck = document.querySelector('.btn_check');
+    const btnShow = document.querySelector('.btn_show');
+    const btnJson = document.querySelector('.btn_json');
+    const btnDel = document.querySelector('.btn_del');
+
     input.addEventListener('input', (e) => {
-      const inputValue = form.querySelector('input').value;
+      const inputValue = form.querySelector('.input_json').value;
       const nodeToAppend = document.querySelector('.node_to_append');
 
       fetch(`/json?query=${inputValue}`)
@@ -30,9 +56,44 @@
           nodeToAppend.innerHTML = data.join(`\n`);
         })
     })
-    form.addEventListener('submit', e => {
-      const inputValue = form.querySelector('input').value;
-      fetch(`/file?query=${inputValue}`)
+
+    btnCreate.addEventListener('click', e => {
+      const inputValue = form.querySelector('.input_create').value;
+      fetch(`/create?query=${inputValue}`)
+        .then(res => res.json())
+        .then(data => console.log(data));
+    })
+
+    btnCheck.addEventListener('click', e => {
+      const inputFileValue = form.querySelector('.input_save_file').value;
+      const inputDataValue = form.querySelector('.input_save_data').value;
+      fetch(`/check?query=${inputFileValue}&${inputDataValue}`)
+        .then(res => res.json())
+        .then(data => console.log(data));
+    })
+
+    btnShow.addEventListener('click', e => {
+      const inputValue = form.querySelector('.input_show').value;
+      const showContent = document.querySelector('.show_file_content');
+      fetch(`/show?query=${inputValue}`)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          showContent.innerHTML = '';
+          showContent.innerHTML = data;
+        })
+    })
+
+    btnJson.addEventListener('click', e => {
+      const inputValue = form.querySelector('.input_json').value;
+      fetch(`/save?query=${inputValue}`)
+        .then(res => res.json())
+        .then(data => console.log(data));
+    })
+
+    btnDel.addEventListener('click', e => {
+      const inputValue = form.querySelector('.input_delete').value;
+      fetch(`/delete?query=${inputValue}`)
         .then(res => res.json())
         .then(data => console.log(data));
     })
